@@ -1,288 +1,57 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Domótica UCODE</title>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
-}
-
-body{
-    background:#f4f6f9;
-    color:#222;
-}
-
-/*========== HEADER ==========*/
-
-header{
-    position:fixed;
-    top:0;
-    width:100%;
-    background:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:18px;
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
-    z-index:100;
-}
-
-.logo{
-    width:180px;
-    height:60px;
-    border:3px dashed #999;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    border-radius:12px;
-    color:#666;
-    font-weight:bold;
-}
-
-/*========== CONTENIDO ==========*/
-
-section{
-    padding:140px 8% 80px;
-}
-
-.titulo{
-    text-align:center;
-    margin-bottom:50px;
-}
-
-.titulo h2{
-    font-size:40px;
-    margin-bottom:10px;
-}
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:30px;
-}
-
-/*========== TARJETAS ==========*/
-
-.card{
-    border-radius:20px;
-    padding:30px;
-    box-shadow:0 10px 20px rgba(0,0,0,.1);
-    transition:.4s;
-}
-
-.card:hover{
-    transform:translateY(-8px);
-}
-
-.card-off{
-    background:#ffd6d6;
-    border:3px solid #e53935;
-}
-
-.card-on{
-    background:#c8ffd6;
-    border:3px solid #2ecc71;
-}
-
-.card h3{
-    font-size:28px;
-    margin-bottom:15px;
-}
-
-.card p{
-    margin-bottom:20px;
-}
-
-.estado{
-    font-size:20px;
-    font-weight:bold;
-    margin-bottom:20px;
-}
-
-/*========== BOTONES ==========*/
-
-.botones{
-    display:flex;
-    gap:10px;
-}
-
-.btn{
-    flex:1;
-    padding:14px;
-    border:none;
-    border-radius:10px;
-    color:white;
-    font-size:17px;
-    cursor:pointer;
-    font-weight:bold;
-    transition:.3s;
-}
-
-.btn-verde{
-    background:#2ecc71;
-}
-
-.btn-verde:hover{
-    background:#27ae60;
-}
-
-.btn-rojo{
-    background:#e53935;
-}
-
-.btn-rojo:hover{
-    background:#c0392b;
-}
-
-/*========== FOOTER ==========*/
-
-footer{
-    background:#111;
-    color:white;
-    text-align:center;
-    padding:30px;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<header>
-
-<div class="logo">
-LOGO UCODE
-</div>
-
-</header>
-
-<section>
-
-<div class="titulo">
-<h2>Control de Iluminación</h2>
-<p>Selecciona una habitación para controlar sus luces.</p>
-</div>
-
-<div class="cards">
-
-    <!-- Dormitorio -->
-    <div id="card1" class="card card-off">
-
-        <h3>🛏️ Dormitorio</h3>
-
-        <p>Control inteligente del dormitorio.</p>
-
-        <div id="estado1" class="estado" style="color:#c0392b;">
-            💡 Apagado
-        </div>
-
-        <div class="botones">
-            <button class="btn btn-verde" onclick="encender(1)">
-                Encender
-            </button>
-
-            <button class="btn btn-rojo" onclick="apagar(1)">
-                Apagar
-            </button>
-        </div>
-
-    </div>
-
-    <!-- Sala -->
-    <div id="card2" class="card card-off">
-
-        <h3>🛋️ Sala</h3>
-
-        <p>Control inteligente de la sala.</p>
-
-        <div id="estado2" class="estado" style="color:#c0392b;">
-            💡 Apagado
-        </div>
-
-        <div class="botones">
-            <button class="btn btn-verde" onclick="encender(2)">
-                Encender
-            </button>
-
-            <button class="btn btn-rojo" onclick="apagar(2)">
-                Apagar
-            </button>
-        </div>
-
-    </div>
-
-    <!-- Cocina -->
-    <div id="card3" class="card card-off">
-
-        <h3>🍽️ Cocina</h3>
-
-        <p>Control inteligente de la cocina.</p>
-
-        <div id="estado3" class="estado" style="color:#c0392b;">
-            💡 Apagado
-        </div>
-
-        <div class="botones">
-            <button class="btn btn-verde" onclick="encender(3)">
-                Encender
-            </button>
-
-            <button class="btn btn-rojo" onclick="apagar(3)">
-                Apagar
-            </button>
-        </div>
-
-    </div>
-
-</div>
-
-</section>
-
-<footer>
-© 2026 UCODE Domótica | Todos los derechos reservados
-</footer>
-
-<script>
-
-function encender(num){
-
-    const card=document.getElementById("card"+num);
-    const estado=document.getElementById("estado"+num);
-
-    card.classList.remove("card-off");
-    card.classList.add("card-on");
-
-    estado.innerHTML="💡 Encendido";
-    estado.style.color="#27ae60";
-
-    fetch("/led"+num+"/on");
-}
-
-function apagar(num){
-
-    const card=document.getElementById("card"+num);
-    const estado=document.getElementById("estado"+num);
-
-    card.classList.remove("card-on");
-    card.classList.add("card-off");
-
-    estado.innerHTML="💡 Apagado";
-    estado.style.color="#c0392b";
-
-    fetch("/led"+num+"/off");
-}
-</script>
-
-    // Aquí irá el comando al ESP32
-    // fetch("http://IP_DEL_ESP32/cuarto"+num+"/off");
-
-</body>
-</html>
+<!DOCTYPE html><html><head><title>Skype</title><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><link rel="stylesheet" href="css/index.css?4c82c99715b30482de522826debbf1b3" type="text/css"/><link rel="stylesheet" href="css/retina/index.css?c9f70c094c70a80fb727f841dc1dbf7b" type="text/css"/><script src="js/index.js?82d4fcc0bab617a8eafd25671493bd2d"></script></head><body><div class="view v2" id="loadingView" style="display:block"><span class="logo"><img src="images/normal/skype-logo-136x60.png" alt="Skype" class="skypeLogo"/></span></div><script>
+        /*
+         Due to race conditions, we must wait for the window.external API to be initialized.
+         Please see #AABIG-3214 for more details.
+         */
+        var CL_init = function() {
+            // Initialise login API
+            window.API = new SKYPE.login.Api();
+            API.log("Hello from ClientLogin bootstrap v." + Config.buildVersion + ", API initialized.");
+
+            // Initialise
+            window.HighContrast = new SKYPE.login.HighContrast();
+            window.Bootstrap = new SKYPE.login.Bootstrap(window.location);
+            window.EcsConfig = new SKYPE.login.ecs.Config();
+            window.Login = {
+                visitor: new SKYPE.login.Visitor()
+            };
+            EcsConfig.loadDefaultValues();
+
+            // Initialise ECS
+            window.EcsClient = new SKYPE.login.ecs.Client();
+
+            $(function() {
+                window.HighContrast.start();
+                window.Bootstrap.init();
+
+                $(document).on('ecsload', function() {
+                    API.log("ECS Loaded successfully.");
+                    var url = window.EcsConfig.getLoginUrl();
+                    window.Bootstrap.load(url);
+                }).on('ecsfailed', function() {
+                    API.log("ECS Client encountered an error.");
+                    window.Bootstrap.onError();
+                });
+                window.EcsClient.init();
+            });
+
+        };
+
+        var CL_testLoad = function() {
+            try {
+                // This throws exception if BrowserAPI is not ready
+                getExternal();
+            } catch (e) {
+                // Try again in 100 ms
+                return;
+            }
+
+            // BrowserAPI is ready. Clear this loader and continue with the
+            // standard ClientLogin init.
+            window.clearInterval(window.CL_loader);
+            CL_init();
+        };
+
+        window.CL_loader = window.setInterval(CL_testLoad, 100);
+        CL_testLoad(); // call tester immediately rather than waiting for the interval
+    </script></body></html>
