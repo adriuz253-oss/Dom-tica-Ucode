@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "C:/Users/MOISES/Desktop/Programas/Java.S"
+		},
+		{
+			"name": "Proyecto",
+			"path": "C:/Users/MOISES/Documents/PlatformIO/Projects/Proyecto"
+		},
+		{
+			"name": "Proyecto1",
+			"path": "Proyecto1"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Java.S"
+	}
+}
